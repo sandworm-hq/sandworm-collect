@@ -1,0 +1,41 @@
+service: sandworm-collect
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  httpApi:
+    cors: true
+  iam:
+    role:
+      name: lambda-sandworm-collector-role
+      statements:
+        - Effect: 'Allow'
+          Resource: 'arn:aws:dynamodb:*:*:table/CollectedPermissions'
+          Action: 'dynamodb:BatchWriteItem'
+
+functions:
+  ingest:
+    handler: handler.ingest
+    events:
+      - httpApi:
+          path: /
+          method: post
+
+resources:
+  Resources:
+    CollectedPermissions:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: CollectedPermissions
+        BillingMode: PAY_PER_REQUEST
+        AttributeDefinitions:
+          - AttributeName: module
+            AttributeType: S
+          - AttributeName: uuid
+            AttributeType: S
+        KeySchema:
+          - AttributeName: module
+            KeyType: HASH
+          - AttributeName: uuid
+            KeyType: RANGE

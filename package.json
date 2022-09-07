@@ -1,0 +1,10 @@
+{
+  "name": "sandworm-collect",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "uuid": "^9.0.0"
+  }
+}
