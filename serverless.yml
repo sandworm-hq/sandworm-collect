@@ -1,6 +1,9 @@
 service: sandworm-collect
 frameworkVersion: '3'
 
+plugins:
+  - serverless-domain-manager
+
 provider:
   name: aws
   runtime: nodejs14.x
@@ -39,3 +42,15 @@ resources:
             KeyType: HASH
           - AttributeName: uuid
             KeyType: RANGE
+
+custom:
+  customDomain:
+    domainName: collect.sandworm.dev
+    stage: prod
+    certificateName: 'sandworm.dev'
+    createRoute53Record: false
+    createRoute53IPv6Record: false
+    endpointType: REGIONAL
+    securityPolicy: tls_1_2
+    apiType: http
+    autoDomain: true
