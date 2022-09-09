@@ -12,10 +12,6 @@ provider:
   iam:
     role:
       name: lambda-sandworm-collector-role
-      statements:
-        - Effect: 'Allow'
-          Resource: 'arn:aws:dynamodb:*:*:table/CollectedPermissions'
-          Action: 'dynamodb:BatchWriteItem'
 
 functions:
   ingest:
@@ -24,24 +20,6 @@ functions:
       - httpApi:
           path: /
           method: post
-
-resources:
-  Resources:
-    CollectedPermissions:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        TableName: CollectedPermissions
-        BillingMode: PAY_PER_REQUEST
-        AttributeDefinitions:
-          - AttributeName: module
-            AttributeType: S
-          - AttributeName: uuid
-            AttributeType: S
-        KeySchema:
-          - AttributeName: module
-            KeyType: HASH
-          - AttributeName: uuid
-            KeyType: RANGE
 
 custom:
   customDomain:
