@@ -6,7 +6,7 @@
   "private": false,
   "dependencies": {
     "aws4": "^1.11.0",
-    "mongodb": "^4.9.1"
+    "mongodb": "^4.17.0"
   },
   "devDependencies": {
     "serverless-domain-manager": "^6.1.0"
